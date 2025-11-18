@@ -1,6 +1,10 @@
-from google.generativeai import GenerativeModel
+from google import genai
+import os
+from dotenv import load_dotenv
 
-model = GenerativeModel("gemini-2.5-flash")  # Adjust if you are using SDK wrapper
+load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def validate_report_capability(report_type: str, columns: list[str]) -> dict:
    
@@ -25,7 +29,7 @@ def validate_report_capability(report_type: str, columns: list[str]) -> dict:
                 - Keep the reason very brief.
             """
 
-    result = model.generate_content(prompt)
+    result = client.models.generate_content(prompt)
 
     text = result.text.strip().strip("`").replace("json", "").strip()
 
