@@ -29,7 +29,10 @@ def validate_report_capability(report_type: str, columns: list[str]) -> dict:
                 - Keep the reason very brief.
             """
 
-    result = client.models.generate_content(prompt)
+    result = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
 
     text = result.text.strip().strip("`").replace("json", "").strip()
 
